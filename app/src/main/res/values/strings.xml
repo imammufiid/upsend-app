@@ -27,4 +27,8 @@
     <string name="register_account">Daftar Akun</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="firstname">Nama Depan</string>
+    <string name="last_name">Nama Belakang</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Konfirmasi Password</string>
 </resources>
