@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Up-Send</string>
+
+    <!--Titles-->
+    <string name="onboarding_slide1_title">Selamat Datang di Up-Send</string>
+    <string name="onboarding_slide1_subtitle">Yuk, Bikin Event!</string>
+    <string name="onboarding_slide1_desc">Kamu bisa mengelola eventmu hanya melalui smartphone</string>
+
+    <string name="onboarding_slide2_title">Login to your account</string>
+    <string name="onboarding_slide2_subtitle">Lihat orang yang hadir di eventmu</string>
+    <string name="onboarding_slide2_desc">Kamu juga bisa melihat siapa saja yang hadir di eventmu</string>
+
+    <string name="onboarding_slide3_title">Login to your account</string>
+    <string name="onboarding_slide3_subtitle">Daftar dan ikuti event yang menarik</string>
+    <string name="onboarding_slide3_desc">Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi</string>
+
+    <string name="onboarding_slide4_title">Daftar Akun</string>
+    <string name="onboarding_slide4_subtitle">Yuk, gabung bersama kami</string>
+    <string name="onboarding_slide4_desc">Jadwal eventmu akan kami kelola dengan baik</string>
+
+    <!--Button OnBoarding-->
+    <string name="skip_btn">Lewati</string>
+    <string name="next">Lanjut</string>
+    <string name="skip">Lewati</string>
+    <string name="get_started">Mulai</string>
+    <string name="login">Masuk</string>
+    <string name="register_account">Daftar Akun</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+</resources>
