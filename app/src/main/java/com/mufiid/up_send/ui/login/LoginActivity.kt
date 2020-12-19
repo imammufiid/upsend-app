@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.mufiid.up_send.R
 import com.mufiid.up_send.databinding.ActivityLoginBinding
+import com.mufiid.up_send.ui.home.HomeActivity
 import com.mufiid.up_send.ui.registration.RegistrationActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -31,7 +32,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.btn_login -> {}
+            R.id.btn_login -> {
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
             R.id.btn_registration -> {
                 startActivity(Intent(this, RegistrationActivity::class.java))
             }

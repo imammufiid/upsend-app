@@ -8,4 +8,15 @@
         <item name="fontFamily">@font/grabfont</item>
     </style>
 
+    <style name="Theme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/grabfont</item>
+        <item name="android:queryHint">"Offers, food, and place to go"</item>
+    </style>
+
 </resources>
