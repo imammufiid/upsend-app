@@ -31,4 +31,17 @@
     <string name="last_name">Nama Belakang</string>
     <string name="email">Email</string>
     <string name="confirm_password">Konfirmasi Password</string>
+    <string name="title_event">Title Event</string>
+    <string name="datetime_event">DateTime Event</string>
+    <string name="status_event">Status Event</string>
+    <string name="description_event">Kamu juga bisa melihat siapa saja yang hadir di eventmu. Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi. Jadwal eventmu akan kami kelola dengan baik</string>
+    <string name="text_description_event">Deskripsi</string>
+    <string name="text_dateTime_event">Tanggal/Waktu</string>
+    <string name="dateTime_event">01-01-2020 - 09:00</string>
+    <string name="participant_registration">Peserta Daftar</string>
+    <string name="participant_come">Peserta Hadir</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="start_date">Mulai : </string>
+    <string name="due_date">Selesai : </string>
+    <string name="_0">0</string>
 </resources>
