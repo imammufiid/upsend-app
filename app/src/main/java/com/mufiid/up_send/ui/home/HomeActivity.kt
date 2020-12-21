@@ -1,10 +1,12 @@
 package com.mufiid.up_send.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.mufiid.up_send.R
 import com.mufiid.up_send.databinding.ActivityHomeBinding
+import com.mufiid.up_send.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var activityHomeBinding: ActivityHomeBinding
@@ -28,6 +30,10 @@ class HomeActivity : AppCompatActivity() {
 
         activityHomeBinding.include.ibSetting.setOnClickListener {
             Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show()
+        }
+
+        activityHomeBinding.fabAddEvent.setOnClickListener {
+            startActivity(Intent(this, DetailActivity::class.java))
         }
     }
 }
