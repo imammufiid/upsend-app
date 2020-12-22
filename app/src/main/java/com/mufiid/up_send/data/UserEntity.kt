@@ -1,5 +1,39 @@
 package com.mufiid.up_send.data
 
-data class UserEntity (
-    val id: String?
-)
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class UserEntity(
+
+	@field:SerializedName("firstname")
+	val firstName: String? = null,
+
+	@field:SerializedName("updated_at")
+	val updatedAt: String? = null,
+
+	@field:SerializedName("role_id")
+	val roleId: Int? = null,
+
+	@field:SerializedName("access_id")
+	val accessId: Int? = null,
+
+	@field:SerializedName("created_at")
+	val createdAt: String? = null,
+
+	@field:SerializedName("id")
+	var id: Int? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null,
+
+	@field:SerializedName("username")
+	var username: String? = null,
+
+	@field:SerializedName("lastname")
+	val lastName: String? = null,
+
+	@field:SerializedName("token")
+	var token: String? = null
+): Parcelable
