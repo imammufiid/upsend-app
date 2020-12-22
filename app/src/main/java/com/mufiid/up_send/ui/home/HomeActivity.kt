@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.mufiid.up_send.R
 import com.mufiid.up_send.databinding.ActivityHomeBinding
 import com.mufiid.up_send.ui.detail.DetailActivity
+import com.mufiid.up_send.ui.form.FormActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var activityHomeBinding: ActivityHomeBinding
@@ -33,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         activityHomeBinding.fabAddEvent.setOnClickListener {
-            startActivity(Intent(this, DetailActivity::class.java))
+            startActivity(Intent(this, FormActivity::class.java))
         }
     }
 }
