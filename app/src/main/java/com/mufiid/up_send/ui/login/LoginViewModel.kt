@@ -1,0 +1,106 @@
+package com.mufiid.up_send.ui.login
+
+import androidx.lifecycle.ViewModel
+import com.mufiid.up_send.api.ApiConfig
+import com.mufiid.up_send.data.UserEntity
+import com.mufiid.up_send.utils.SingleLiveEvent
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+
+class LoginViewModel : ViewModel() {
+    private var state: SingleLiveEvent<AuthState> = SingleLiveEvent()
+    private val api = ApiConfig.instance()
+    fun login(email: String?, password: String?) {
+        AuthState.IsLoading(true)
+        CompositeDisposable().add(
+            api.login(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when (it.status) {
+                        200 -> {
+                            state.value = it.data?.let { data -> AuthState.IsSuccess(data) }
+                        }
+                        else -> {
+                            state.value = AuthState.IsFailed(it.message)
+                        }
+                    }
+                    AuthState.IsLoading()
+                }, {
+                    state.value = AuthState.IsFailed(it.message)
+                    AuthState.IsLoading()
+                })
+        )
+    }
+
+    fun registration(
+        username: String?,
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        password: String?
+    ) {
+        AuthState.IsLoading(true)
+        CompositeDisposable().add(
+            api.register(username, firstName, lastName, email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when (it.status) {
+                        200 -> {
+                            state.value =
+                                it.message?.let { msg -> AuthState.ShowToast(msg) }
+                        }
+                        else -> {
+                            state.value = AuthState.IsFailed(it.message)
+                        }
+                    }
+                    AuthState.IsLoading()
+                }, {
+                    state.value = AuthState.IsFailed(it.message)
+                    AuthState.IsLoading()
+                })
+
+        )
+    }
+
+    fun validate(
+        email: String?,
+        password: String?,
+    ): Boolean {
+        state.value = AuthState.Reset
+        if (email != null) {
+            if (email.isEmpty()) {
+                state.value = AuthState.Error("Email Tidak Boleh Kosong!")
+                return false
+            }
+        }
+
+        if (password != null) {
+            if (password.isEmpty()) {
+                state.value = AuthState.Error("Password Tidak Boleh Kosong")
+                return false
+            }
+        }
+
+        return true
+    }
+
+    fun getState() = state
+}
+
+
+sealed class AuthState {
+    data class ShowToast(var message: String?) : AuthState()
+    data class IsLoading(var state: Boolean? = false) : AuthState()
+    data class Error(var err: String?) : AuthState()
+    data class IsSuccess(var user: UserEntity?) : AuthState()
+    data class IsFailed(var message: String? = null) : AuthState()
+    data class AuthValidation(
+        var username: String? = null,
+        var password: String? = null
+    ) : AuthState()
+
+    object Reset : AuthState()
+}
