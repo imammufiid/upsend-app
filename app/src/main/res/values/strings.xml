@@ -41,7 +41,12 @@
     <string name="participant_registration">Peserta Daftar</string>
     <string name="participant_come">Peserta Hadir</string>
     <string name="scan_qr">Scan QR</string>
-    <string name="start_date">Mulai : </string>
-    <string name="due_date">Selesai : </string>
+    <string name="text_start_date">Mulai : </string>
+    <string name="text_due_date">Selesai : </string>
     <string name="_0">0</string>
+    <string name="submit">Kirim</string>
+    <string name="start_date">Tanggal Mulai</string>
+    <string name="due_event">Tanggal Selesai</string>
+    <string name="start_time">Waktu Mulai</string>
+    <string name="due_time">Waktu Selesai</string>
 </resources>
