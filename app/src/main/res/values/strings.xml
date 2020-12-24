@@ -49,4 +49,8 @@
     <string name="due_event">Tanggal Selesai</string>
     <string name="start_time">Waktu Mulai</string>
     <string name="due_time">Waktu Selesai</string>
+    <string name="simple_message">Message</string>
+    <string name="search_event">Cari Eventmu dan Ikuti</string>
+    <string name="data_not_found">Kamu tidak memiliki Event</string>
+    <string name="not_have_participant">Belum ada peserta</string>
 </resources>
