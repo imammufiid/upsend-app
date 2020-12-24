@@ -7,11 +7,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class EventEntity(
 
-	@field:SerializedName("image")
+	@field:SerializedName("image_url")
 	val image: String? = null,
 
 	@field:SerializedName("code")
 	val code: String? = null,
+
+	@field:SerializedName("url_qr_code")
+	val urlQrCode: String? = null,
 
 	@field:SerializedName("event_id")
 	val eventId: Int? = null,
@@ -20,7 +23,7 @@ data class EventEntity(
 	val userId: Int? = null,
 
 	@field:SerializedName("capasity")
-	val capasity: Int? = null,
+	val capasity: Int? = 0,
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -38,5 +41,14 @@ data class EventEntity(
 	val status: Int? = null,
 
 	@field:SerializedName("start_date")
-	val startDate: String? = null
+	val startDate: String? = null,
+
+	@field:SerializedName("description")
+	val description: String? = null,
+
+	@field:SerializedName("participant")
+	val participant: Int? = 0,
+
+	@field:SerializedName("participant_is_coming")
+	val participantIsComing: Int? = 0,
 ): Parcelable
