@@ -12,7 +12,7 @@ class LoginViewModel : ViewModel() {
     private var state: SingleLiveEvent<AuthState> = SingleLiveEvent()
     private val api = ApiConfig.instance()
     fun login(email: String?, password: String?) {
-        AuthState.IsLoading(true)
+        state.value = AuthState.IsLoading(true)
         CompositeDisposable().add(
             api.login(email, password)
                 .subscribeOn(Schedulers.io())
@@ -26,46 +26,15 @@ class LoginViewModel : ViewModel() {
                             state.value = AuthState.IsFailed(it.message)
                         }
                     }
-                    AuthState.IsLoading()
+                    state.value = AuthState.IsLoading()
                 }, {
                     state.value = AuthState.IsFailed(it.message)
-                    AuthState.IsLoading()
+                    state.value = AuthState.IsLoading()
                 })
         )
     }
 
-    fun registration(
-        username: String?,
-        firstName: String?,
-        lastName: String?,
-        email: String?,
-        password: String?
-    ) {
-        AuthState.IsLoading(true)
-        CompositeDisposable().add(
-            api.register(username, firstName, lastName, email, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when (it.status) {
-                        200 -> {
-                            state.value =
-                                it.message?.let { msg -> AuthState.ShowToast(msg) }
-                        }
-                        else -> {
-                            state.value = AuthState.IsFailed(it.message)
-                        }
-                    }
-                    AuthState.IsLoading()
-                }, {
-                    state.value = AuthState.IsFailed(it.message)
-                    AuthState.IsLoading()
-                })
-
-        )
-    }
-
-    fun validate(
+    fun loginValidate(
         email: String?,
         password: String?,
     ): Boolean {
@@ -97,8 +66,8 @@ sealed class AuthState {
     data class Error(var err: String?) : AuthState()
     data class IsSuccess(var user: UserEntity?) : AuthState()
     data class IsFailed(var message: String? = null) : AuthState()
-    data class AuthValidation(
-        var username: String? = null,
+    data class LoginValidation(
+        var email: String? = null,
         var password: String? = null
     ) : AuthState()
 
