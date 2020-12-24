@@ -10,7 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|enterAlways">
 
         <LinearLayout
             android:id="@+id/linear_search"
@@ -41,7 +42,7 @@
                 android:background="@drawable/shape_sv"
                 android:iconifiedByDefault="true"
                 android:queryBackground="@null"
-                android:queryHint="Offers, food, and place to go"
+                android:queryHint="@string/search_event"
                 android:searchIcon="@drawable/ic_sv"
                 android:theme="@style/SearchViewTheme" />
 
