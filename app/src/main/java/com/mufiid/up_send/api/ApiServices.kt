@@ -29,11 +29,12 @@ interface ApiServices {
     ): Observable<WrappedResponse<UserEntity>>
 
     // GET EVENTS JOIN
+    @Headers("Accept: application/json")
     @FormUrlEncoded
     @POST("event/participant/events")
     fun getListOfEventJoin(
         @Header("Authorization") token: String?,
-        @Field("user_id") userId: String?
+        @Field("user_id") userId: Int?
     ): Observable<WrappedListResponses<EventEntity>>
 
     // GET LIST PARTICIPANT JOIN
@@ -41,7 +42,7 @@ interface ApiServices {
     @POST("event/participant")
     fun getListOfParticipantJoin(
         @Header("Authorization") token: String?,
-        @Field("event_id") eventId: String?
+        @Field("event_id") eventId: Int?
     ): Observable<WrappedListResponses<UserEntity>>
 
     // GET LIST PARTICIPANT JOIN
@@ -49,7 +50,7 @@ interface ApiServices {
     @POST("event/participant/come")
     fun getListOfParticipantCome(
         @Header("Authorization") token: String?,
-        @Field("event_id") eventId: String?
+        @Field("event_id") eventId: Int?
     ): Observable<WrappedListResponses<UserEntity>>
 
     // GET EVENTS CREATED
@@ -63,15 +64,16 @@ interface ApiServices {
     @GET("event/show")
     fun getEventById(
         @Header("Authorization") token: String?,
-        @Query("id") id: String?
-    ): Observable<WrappedListResponses<EventEntity>>
+        @Query("id") id: Int?
+    ): Observable<WrappedResponse<EventEntity>>
 
     // GET SEARCH EVENT
+    @Headers("Accept: application/json")
     @GET("event/search")
     fun getEventBySearch(
         @Header("Authorization") token: String?,
         @Query("query") query: String?,
-        @Query("user_id") userId: String?
+        @Query("user_id") userId: Int?
     ): Observable<WrappedListResponses<EventEntity>>
 
     // GET EVENTS CREATED
