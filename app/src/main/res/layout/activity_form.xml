@@ -25,7 +25,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_image_error" />
+                android:src="@drawable/ic_image_error"
+                android:layout_marginTop="50dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_take_photo"
@@ -144,6 +145,22 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/in_capasity_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/layout_due_dateTime"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_capasity_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/text_capasity_event"
+                    android:inputType="number"
+                    android:gravity="top" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -152,7 +169,7 @@
                 android:layout_height="200dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/layout_due_dateTime"
+                android:layout_below="@id/in_capasity_event"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_desc_event"
@@ -178,4 +195,12 @@
         </RelativeLayout>
     </ScrollView>
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/floating_app_bar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>
