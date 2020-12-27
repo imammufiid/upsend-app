@@ -61,6 +61,7 @@ class FormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDialog
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         init()
         setParcelable()
+        checkPermission()
     }
 
     private fun setParcelable() {
@@ -160,6 +161,32 @@ class FormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDialog
         viewModel.getState().observe(this, Observer {
             handleUIState(it)
         })
+    }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (
+                checkSelfPermission(
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    1
+                )
+            }
+        }
     }
 
     private fun pickImageFromGallery() {
