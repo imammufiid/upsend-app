@@ -1,12 +1,16 @@
 package com.mufiid.up_send.ui.home
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +19,7 @@ import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.databinding.ActivityHomeBinding
 import com.mufiid.up_send.ui.detail.DetailActivity
 import com.mufiid.up_send.ui.event.EventActivity
+import com.mufiid.up_send.ui.scanner.ScannerActivity
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
 
@@ -22,6 +27,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: EventAdapter
+
+    companion object {
+        const val ACTIVITY_NAME = "HomeActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +44,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //        activityHomeBinding.tabs.setupWithViewPager(activityHomeBinding.viewPager)
         initSupportActionBar()
         init()
+        checkPermission()
         showDataEvent()
         setRecyclerView()
         showDataBySearch()
@@ -122,13 +132,41 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(binding.include.toolbar)
     }
 
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (
+                checkSelfPermission(
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    1
+                )
+            }
+        }
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.ib_setting -> {
                 Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show()
             }
             R.id.ib_scan -> {
-                Toast.makeText(this, "SCAN", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ScannerActivity::class.java).apply {
+                    putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
+                })
             }
             R.id.ib_add -> {
                 startActivity(Intent(this, EventActivity::class.java))
