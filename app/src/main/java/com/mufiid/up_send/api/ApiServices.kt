@@ -113,4 +113,22 @@ interface ApiServices {
         @Part("description") description: RequestBody?,
         @Part image: MultipartBody.Part?
     ): Observable<MessageResponse>
+
+    // GET LIST PARTICIPANT JOIN
+    @FormUrlEncoded
+    @POST("event/scan")
+    fun scanQRCode(
+        @Header("Authorization") token: String?,
+        @Field("user_id") userId: Int?,
+        @Field("code_event") codeEvent: String?
+    ): Observable<WrappedResponse<EventEntity>>
+
+    // GET LIST PARTICIPANT JOIN
+    @FormUrlEncoded
+    @POST("event/registration")
+    fun scanRegistrationEvent(
+        @Header("Authorization") token: String?,
+        @Field("user_id") userId: Int?,
+        @Field("code_event") codeEvent: String?
+    ): Observable<WrappedResponse<EventEntity>>
 }
