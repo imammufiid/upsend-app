@@ -19,7 +19,7 @@ data class EventEntity(
 	@field:SerializedName("event_id")
 	val eventId: Int? = null,
 
-	@field:SerializedName("user_id")
+	@field:SerializedName("createBy_userId")
 	val userId: Int? = null,
 
 	@field:SerializedName("capasity")
