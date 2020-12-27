@@ -1,6 +1,7 @@
 package com.mufiid.up_send.ui.detail
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.mufiid.up_send.R
 import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.databinding.ActivityDetailBinding
+import com.mufiid.up_send.ui.form.FormActivity
 import com.mufiid.up_send.ui.participant.ParticipantListDialogFragment
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
@@ -30,16 +32,25 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
         init()
         setParcelable()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showDataById()
     }
 
     private fun init() {
         binding.layoutParticipantRegistration.setOnClickListener(this)
         binding.layoutParticipantCome.setOnClickListener(this)
         binding.layoutScan.setOnClickListener(this)
+        binding.include.ibBack.setOnClickListener(this)
+        binding.include.ibEdit.setOnClickListener(this)
         loading = ProgressDialog(this)
+
+        binding.include.titleAppBar.text = getString(R.string.event_detail_title)
 
         viewModel = ViewModelProvider(
             this,
@@ -59,8 +70,18 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setParcelable() {
         dataEvent = intent.getParcelableExtra(EXTRAS_DATA)
-        dataEvent?.let {
 
+    }
+
+    private fun checkIfCreator(userId: Int?) {
+        if(userId ==  UserPref.getUserData(this)?.id) {
+            binding.include.ibEdit.visibility = View.VISIBLE
+            binding.layoutScan.visibility = View.GONE
+        }
+    }
+
+    private fun showDataById() {
+        dataEvent?.let {
             viewModel.getEventById(UserPref.getUserData(this)?.token, it.id)
         }
 
@@ -76,9 +97,12 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.descEvent.text = it.description
                 binding.countParticipantRegistration.text = it.participant.toString()
                 binding.countParticipantCome.text = it.participantIsComing.toString()
+
+                checkIfCreator(it.userId)
             }
         })
     }
+
 
     private fun showLoading(state: Boolean) {
         if (state) {
@@ -100,10 +124,10 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        finish()
+//        return true
+//    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -129,6 +153,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.layout_scan -> {
                 Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
+            }
+            R.id.ib_back -> {
+                finish()
+            }
+            R.id.ib_edit -> {
+                startActivity(Intent(this, FormActivity::class.java).apply {
+                    putExtra(FormActivity.IS_UPDATE, true)
+                    putExtra(FormActivity.EXTRAS_DATA, dataEvent)
+                })
             }
         }
 
