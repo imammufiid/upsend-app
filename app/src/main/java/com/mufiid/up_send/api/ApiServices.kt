@@ -6,6 +6,8 @@ import com.mufiid.up_send.data.source.remote.response.MessageResponse
 import com.mufiid.up_send.data.source.remote.response.WrappedListResponses
 import com.mufiid.up_send.data.source.remote.response.WrappedResponse
 import io.reactivex.rxjava3.core.Observable
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiServices {
@@ -57,7 +59,7 @@ interface ApiServices {
     @GET("event/")
     fun getListOfEventCreated(
         @Header("Authorization") token: String?,
-        @Query("user_id") userId: String?
+        @Query("user_id") userId: Int?
     ): Observable<WrappedListResponses<EventEntity>>
 
     // GET SHOW EVENT
@@ -84,7 +86,31 @@ interface ApiServices {
     ): Observable<MessageResponse>
 
     // CREATE EVENT
+    @Multipart
+    @POST("event/create")
+    fun insertEvent(
+        @HeaderMap token: Map<String, String>?,
+        @Part("user_id") userId: RequestBody?,
+        @Part("name") name: RequestBody?,
+        @Part("start_date") startDate: RequestBody?,
+        @Part("due_date") dueDate: RequestBody?,
+        @Part("capasity") capacity: RequestBody?,
+        @Part("description") description: RequestBody?,
+        @Part image: MultipartBody.Part?
+    ): Observable<MessageResponse>
 
     // UPDATE EVENT
-
+    @Multipart
+    @POST("event/update")
+    fun updateEvent(
+        @HeaderMap token: Map<String, String>?,
+        @Part("id") eventId: RequestBody?,
+        @Part("user_id") userId: RequestBody?,
+        @Part("name") name: RequestBody?,
+        @Part("start_date") startDate: RequestBody?,
+        @Part("due_date") dueDate: RequestBody?,
+        @Part("capasity") capacity: RequestBody?,
+        @Part("description") description: RequestBody?,
+        @Part image: MultipartBody.Part?
+    ): Observable<MessageResponse>
 }
