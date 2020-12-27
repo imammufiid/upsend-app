@@ -14,6 +14,7 @@ import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.databinding.ActivityDetailBinding
 import com.mufiid.up_send.ui.form.FormActivity
 import com.mufiid.up_send.ui.participant.ParticipantListDialogFragment
+import com.mufiid.up_send.ui.scanner.ScannerActivity
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
 
@@ -25,6 +26,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
+        const val ACTIVITY_NAME = "DetailActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,7 +154,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.layout_scan -> {
-                Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ScannerActivity::class.java).apply {
+                    putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
+                })
             }
             R.id.ib_back -> {
                 finish()
