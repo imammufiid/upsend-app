@@ -14,7 +14,7 @@ import com.mufiid.up_send.R
 import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.databinding.ActivityHomeBinding
 import com.mufiid.up_send.ui.detail.DetailActivity
-import com.mufiid.up_send.ui.form.FormActivity
+import com.mufiid.up_send.ui.event.EventActivity
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
 
@@ -57,7 +57,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.include.ibScan.setOnClickListener(this)
         binding.include.ibSetting.setOnClickListener(this)
-        binding.fabAddEvent.setOnClickListener(this)
+        binding.include.ibAdd.setOnClickListener(this)
     }
 
     private fun handlerUIState(it: EventState?) {
@@ -89,6 +89,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 binding.tvMessage.visibility = View.VISIBLE
                 binding.tvMessage.text = getString(R.string.data_not_found)
             } else {
+                binding.tvMessage.visibility = View.GONE
                 adapter.setEvent(it)
             }
         })
@@ -129,8 +130,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             R.id.ib_scan -> {
                 Toast.makeText(this, "SCAN", Toast.LENGTH_SHORT).show()
             }
-            R.id.fab_add_event -> {
-                startActivity(Intent(this, FormActivity::class.java))
+            R.id.ib_add -> {
+                startActivity(Intent(this, EventActivity::class.java))
             }
         }
     }
