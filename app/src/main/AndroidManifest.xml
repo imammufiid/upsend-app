@@ -20,7 +20,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.detail.DetailActivity"></activity>
+        <activity android:name=".ui.event.EventActivity"
+            android:theme="@style/Theme.NoActionBar"/>
+        <activity android:name=".ui.detail.DetailActivity"
+            android:theme="@style/Theme.NoActionBar"/>
         <activity
             android:name=".ui.home.HomeActivity"
             android:theme="@style/Theme.NoActionBar" />
@@ -34,7 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.form.FormActivity" />
+        <activity android:name=".ui.form.FormActivity"
+            android:theme="@style/Theme.NoActionBar"/>
     </application>
 
 </manifest>
