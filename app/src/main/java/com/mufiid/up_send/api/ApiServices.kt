@@ -1,5 +1,6 @@
 package com.mufiid.up_send.api
 
+import com.mufiid.up_send.data.CountEventEntity
 import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.data.UserEntity
 import com.mufiid.up_send.data.source.remote.response.MessageResponse
@@ -27,8 +28,18 @@ interface ApiServices {
         @Field("firstname") firstName: String?,
         @Field("lastname") lastName: String?,
         @Field("email") email: String?,
-        @Field("password") password: String?
+        @Field("password") password: String?,
+        @Field("access_id") accessId: Int?,
+        @Field("role_id") roleId: Int?
     ): Observable<WrappedResponse<UserEntity>>
+
+    // LOGOUT
+    @FormUrlEncoded
+    @POST("auth/logout")
+    fun logout(
+        @Header("Authorization") token: String?,
+        @Field("user_id") userId: Int?
+    ): Observable<WrappedResponse<EventEntity>>
 
     // GET EVENTS JOIN
     @Headers("Accept: application/json")
@@ -77,6 +88,14 @@ interface ApiServices {
         @Query("query") query: String?,
         @Query("user_id") userId: Int?
     ): Observable<WrappedListResponses<EventEntity>>
+
+    // GET SEARCH EVENT
+    @Headers("Accept: application/json")
+    @GET("event/participant/count")
+    fun getCountEvent(
+        @Header("Authorization") token: String?,
+        @Query("user_id") userId: Int?
+    ): Observable<WrappedResponse<CountEventEntity>>
 
     // GET EVENTS CREATED
     @DELETE("event/{id}")
