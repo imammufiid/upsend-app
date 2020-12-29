@@ -110,6 +110,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun isSuccess(user: UserEntity?) {
         user?.let { user -> UserPref.setUserData(this, user) }
         UserPref.setIsLoggedIn(this, true)
+        CustomView.customToast(this, getString(R.string.login_success), true, isSuccess = true)
         Handler(mainLooper).postDelayed({
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
@@ -130,7 +131,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun isLoading(state: Boolean?) {
         state?.let { state ->
             if(state) {
-                loading.setMessage("Loading...")
+                loading.setMessage(getString(R.string.loading))
                 loading.setCanceledOnTouchOutside(false)
                 loading.show()
             } else {
