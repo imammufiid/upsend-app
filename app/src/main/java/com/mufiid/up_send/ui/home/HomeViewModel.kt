@@ -52,10 +52,31 @@ class HomeViewModel:ViewModel() {
         )
     }
 
+    fun logout(token: String?, userId: Int? = null) {
+        state.value = EventState.IsLoading(true)
+        CompositeDisposable().add(
+            api.logout("Bearer $token", userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when(it.status) {
+                        200 -> state.value = EventState.IsSuccess(it.message)
+                        else -> state.value = EventState.Error(it.message)
+                    }
+                    state.value = EventState.IsLoading()
+                }, {
+                    state.value = EventState.Error(it.message)
+                    state.value = EventState.IsLoading()
+                })
+        )
+    }
+
+
     fun getEvents() = events
     fun getState() = state
 }
 sealed class EventState() {
     data class IsLoading(var state: Boolean = false): EventState()
+    data class IsSuccess(var message: String?): EventState()
     data class Error(var err: String?): EventState()
 }
