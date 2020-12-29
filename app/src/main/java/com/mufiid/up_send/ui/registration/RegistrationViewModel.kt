@@ -21,25 +21,25 @@ class RegistrationViewModel:ViewModel() {
         email: String?,
         password: String?
     ) {
-        AuthState.IsLoading(true)
+        state.value = RegistrationState.IsLoading(true)
         CompositeDisposable().add(
-            api.register(username, firstName, lastName, email, password)
+            api.register(username, firstName, lastName, email, password, 1, 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it.status) {
                         201 -> {
                             state.value =
-                                it.message?.let { msg -> RegistrationState.ShowToast(msg) }
+                                it.data?.let { data -> RegistrationState.IsSuccess(data) }
                         }
                         else -> {
                             state.value = RegistrationState.IsFailed(it.message)
                         }
                     }
-                    AuthState.IsLoading()
+                    state.value = RegistrationState.IsLoading()
                 }, {
                     state.value = RegistrationState.IsFailed(it.message)
-                    AuthState.IsLoading()
+                    state.value = RegistrationState.IsLoading()
                 })
 
         )
@@ -53,23 +53,24 @@ class RegistrationViewModel:ViewModel() {
         password: String?,
     ): Boolean {
         state.value = RegistrationState.Reset
-        if (username != null) {
-            if (username.isEmpty()) {
-                state.value = RegistrationState.Error("Email Tidak Boleh Kosong!")
-                return false
-            }
-        }
 
         if (firstName != null) {
             if (firstName.isEmpty()) {
-                state.value = RegistrationState.Error("Email Tidak Boleh Kosong!")
+                state.value = RegistrationState.Error("Nama Depan Tidak Boleh Kosong!")
                 return false
             }
         }
 
         if (lastName != null) {
             if (lastName.isEmpty()) {
-                state.value = RegistrationState.Error("Email Tidak Boleh Kosong!")
+                state.value = RegistrationState.Error("Nama Belakang Tidak Boleh Kosong!")
+                return false
+            }
+        }
+
+        if (username != null) {
+            if (username.isEmpty()) {
+                state.value = RegistrationState.Error("Username Tidak Boleh Kosong!")
                 return false
             }
         }

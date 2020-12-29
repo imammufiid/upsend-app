@@ -1,20 +1,22 @@
 package com.mufiid.up_send.ui.registration
 
-import android.content.Intent
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mufiid.up_send.R
 import com.mufiid.up_send.data.UserEntity
 import com.mufiid.up_send.databinding.ActivityRegistrationBinding
-import com.mufiid.up_send.ui.home.HomeActivity
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var viewModel: RegistrationViewModel
+    private lateinit var loading: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,8 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        binding.btnRegister.setOnClickListener(this)
+        loading = ProgressDialog(this)
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
@@ -87,10 +91,10 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun isSuccess(user: UserEntity?) {
-        user?.let { user -> UserPref.setUserData(this, user) }
-        UserPref.setIsLoggedIn(this, true)
+        CustomView.customToast(this, getString(R.string.registration_success), true,
+            isSuccess = true
+        )
         Handler(mainLooper).postDelayed({
-            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }, 2000)
 
@@ -108,7 +112,36 @@ class RegistrationActivity : AppCompatActivity() {
 
     private fun isLoading(state: Boolean?) {
         state?.let { state ->
-            binding.btnRegistration.isEnabled = !state
+            if(state) {
+                loading.setMessage(getString(R.string.loading))
+                loading.setCanceledOnTouchOutside(false)
+                loading.show()
+            } else {
+                loading.dismiss()
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_register -> {
+                if (viewModel.registrationValidate(
+                        binding.etUsername.text.toString(),
+                        binding.etFirstname.text.toString(),
+                        binding.etLastname.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString(),
+                    )
+                ) {
+                    viewModel.registration(
+                        binding.etUsername.text.toString(),
+                        binding.etFirstname.text.toString(),
+                        binding.etLastname.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString(),
+                    )
+                }
+            }
         }
     }
 }
