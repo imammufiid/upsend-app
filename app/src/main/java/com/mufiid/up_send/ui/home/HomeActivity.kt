@@ -1,12 +1,15 @@
 package com.mufiid.up_send.ui.home
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +22,8 @@ import com.mufiid.up_send.data.EventEntity
 import com.mufiid.up_send.databinding.ActivityHomeBinding
 import com.mufiid.up_send.ui.detail.DetailActivity
 import com.mufiid.up_send.ui.event.EventActivity
+import com.mufiid.up_send.ui.login.LoginActivity
+import com.mufiid.up_send.ui.profile.ProfileActivity
 import com.mufiid.up_send.ui.scanner.ScannerActivity
 import com.mufiid.up_send.utils.helper.CustomView
 import com.mufiid.up_send.utils.pref.UserPref
@@ -48,12 +53,24 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         showDataEvent()
         setRecyclerView()
         showDataBySearch()
+
     }
 
     override fun onResume() {
         super.onResume()
+        checkLogin()
         binding.include.svHome.setQuery("", false)
         binding.include.svHome.isIconified = true
+    }
+
+    private fun checkLogin() {
+        UserPref.getIsLoggedIn(this)?.let {
+            if(!it) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
+
     }
 
     private fun init() {
@@ -73,7 +90,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private fun handlerUIState(it: EventState?) {
         when (it) {
             is EventState.IsLoading -> showLoading(it.state)
-            is EventState.Error -> showToast(it.err)
+            is EventState.Error -> showToast(it.err, false)
+            is EventState.IsSuccess -> showToast(it.message)
         }
     }
 
@@ -161,7 +179,38 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.ib_setting -> {
-                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show()
+                PopupMenu(this, binding.include.ibSetting).apply {
+                    inflate(R.menu.setting_menu)
+                    setOnMenuItemClickListener {
+                        when(it.itemId) {
+                            R.id.menu_profile -> {
+                                startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
+                            }
+                            R.id.menu_logout -> {
+                                AlertDialog.Builder(this@HomeActivity).apply {
+                                    setTitle(getString(R.string.confirm_logout))
+                                    setMessage(getString(R.string.question_logout))
+                                        .setPositiveButton(getString(R.string.yes)) { _, _->
+                                            UserPref.setIsLoggedIn(this@HomeActivity, false)
+                                            viewModel.logout(UserPref.getUserData(this@HomeActivity)?.token)
+                                            UserPref.clear(this@HomeActivity)
+                                            Handler(mainLooper).postDelayed({
+                                                startActivity(Intent(this@HomeActivity, LoginActivity::class.java).apply {
+                                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                })
+                                                finish()
+                                            }, 1000)
+                                        }
+                                        .setNegativeButton(getString(R.string.no)) { dialogInterface, _ ->
+                                            dialogInterface.dismiss()
+                                        }
+                                }.show()
+                            }
+                        }
+                        return@setOnMenuItemClickListener false
+                    }
+                }.show()
             }
             R.id.ib_scan -> {
                 startActivity(Intent(this, ScannerActivity::class.java).apply {
