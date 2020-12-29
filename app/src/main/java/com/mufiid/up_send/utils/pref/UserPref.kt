@@ -10,6 +10,10 @@ object UserPref {
         return UserEntity().apply {
             username = pref.getString("USERNAME", "")
             token = pref.getString("TOKEN", "")
+            firstName = pref.getString("FIRSTNAME", "")
+            lastName = pref.getString("LASTNAME", "")
+            email = pref.getString("EMAIL", "")
+            token = pref.getString("TOKEN", "")
             id = pref.getInt("ID_USER", 0)
         }
     }
@@ -18,6 +22,10 @@ object UserPref {
         val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
         pref.edit {
             putString("USERNAME", user.username)
+            putString("TOKEN", user.token)
+            putString("FIRSTNAME", user.firstName)
+            putString("LASTNAME", user.lastName)
+            putString("EMAIL", user.email)
             putString("TOKEN", user.token)
             user.id?.let { putInt("ID_USER", it) }
         }
@@ -32,6 +40,13 @@ object UserPref {
         val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
         pref.edit {
             putBoolean("IS_LOGGED_IN", isLoggedIn)
+        }
+    }
+
+    fun clear(context: Context) {
+        val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
+        pref.edit {
+            clear()
         }
     }
 }
