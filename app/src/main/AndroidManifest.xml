@@ -20,8 +20,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.scanner.ScannerActivity"
-            android:theme="@style/Theme.NoActionBar"/>
+        <activity android:name=".ui.profile.ProfileActivity"></activity>
+        <activity
+            android:name=".ui.scanner.ScannerActivity"
+            android:theme="@style/Theme.NoActionBar" />
         <activity
             android:name=".ui.event.EventActivity"
             android:theme="@style/Theme.NoActionBar" />
