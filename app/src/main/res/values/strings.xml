@@ -55,4 +55,17 @@
     <string name="not_have_participant">Belum ada peserta</string>
     <string name="text_capasity_event">Kapasitas</string>
     <string name="event_detail_title">Detail Event</string>
+    <string name="profile">Profil</string>
+    <string name="logout">Keluar</string>
+    <string name="event_created">Event Dibuat</string>
+    <string name="event_following">Event Diikuti</string>
+    <string name="name">fullname</string>
+    <string name="fullname">Nama Lengkap</string>
+    <string name="confirm_logout">Konfirmasi</string>
+    <string name="question_logout">Apakah anda ingin keluar?</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="loading">Loading...</string>
+    <string name="login_success">Berhasil Login</string>
+    <string name="registration_success">Berhasil Registrasi</string>
 </resources>
