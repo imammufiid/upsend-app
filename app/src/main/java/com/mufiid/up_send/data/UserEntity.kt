@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class UserEntity(
 
 	@field:SerializedName("firstname")
-	val firstName: String? = null,
+    var firstName: String? = null,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,
@@ -26,13 +26,13 @@ data class UserEntity(
 	var id: Int? = null,
 
 	@field:SerializedName("email")
-	val email: String? = null,
+	var email: String? = null,
 
 	@field:SerializedName("username")
 	var username: String? = null,
 
 	@field:SerializedName("lastname")
-	val lastName: String? = null,
+	var lastName: String? = null,
 
 	@field:SerializedName("token")
 	var token: String? = null
