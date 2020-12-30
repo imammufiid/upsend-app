@@ -78,7 +78,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private fun checkIfCreator(userId: Int?) {
         if(userId ==  UserPref.getUserData(this)?.id) {
             binding.include.ibEdit.visibility = View.VISIBLE
-            binding.layoutScan.visibility = View.GONE
+        } else {
+            binding.layoutScan.visibility = View.VISIBLE
         }
     }
 
@@ -94,8 +95,16 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                     .placeholder(R.drawable.ic_image_placeholder)
                     .into(binding.imageEvent)
                 binding.titleEvent.text = it.name
-                binding.dateTimeEvent.text = it.startDate
-                binding.dueDateTimeEvent.text = it.dueDate
+                val startDateTime = it.startDate?.split(" ")
+                val startDate = startDateTime?.get(0)
+                val startTime = startDateTime?.get(1)
+                binding.dateTimeEvent.text = "$startDate = $startTime"
+
+                val dueDateTime = it.dueDate?.split(" ")
+                val dueDate = dueDateTime?.get(0)
+                val dueTime = dueDateTime?.get(0)
+                binding.dueDateTimeEvent.text = "$dueDate - $dueTime"
+
                 binding.descEvent.text = it.description
                 binding.countParticipantRegistration.text = it.participant.toString()
                 binding.countParticipantCome.text = it.participantIsComing.toString()
