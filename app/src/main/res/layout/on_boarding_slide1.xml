@@ -46,7 +46,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
+        android:src="@drawable/ic_onboarding_1"
+        app:layout_constraintVertical_bias="0.35"
         tools:ignore="ContentDescription" />
 
     <TextView
